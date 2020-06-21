@@ -1,10 +1,18 @@
-html,body {
+body {
     background-color: steelblue;
+    margin-top: 2vh;
 }
 
+#dash {
+    background-color: #F5EBE2;
+}
 h2 {
     margin: 4 auto;
+    text-shadow: oldlace;
+    text-decoration: overline;
+    text-decoration-style: solid;
 }
+
 .parallax {
     background-image: url("./calvin&hobbes.jpg");
     height: 100px;

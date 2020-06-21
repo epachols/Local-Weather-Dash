@@ -9,21 +9,30 @@
     <title>ForeDash, your Weather dashboard</title>
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid" id="main-content">
+
         <div class="row justify-content-center">
             <h2>ForeDash, Your Weather Dashboard</h2>
         </div>
-        <div class="row">
-            <div class="col col-4 bg-light" id="search">
+    <!-- this begins the search and button pop section  -->
+        <div class="row justify-content-between">
+            <div class="col col-md-4 bg-light" id="search">
                 Search:
-                <div class="form-group">
-                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                <div class="form-inline mb-3">
+                    <input type="text" class="form-control" id="cityInput" placeholder="E.g., Bangkok">
+                    <button type="button" class="btn btn-secondary btn-lg ml-1 mt-1" id="searchBtn"><i class="fas fa-cloud-moon"></i></button>
                 </div>
+                <div class="w-100"></div>
+                <div class="py-2" id="cityBtns"></div>
             </div>
-            <div class="col col-8 bg-dark text-white" id="dash">
-                and here also will be some stuff
+    <!-- this begins the section with the forecast info  -->
+            <div class="col-md-8 bg-dark" id="dash">
+                <div class="row bg-light my-2">daily forecast card goes here</div>
+                <div class="row bg-light my-2">make the five-day five cards here, foreach brought back in array</div>
             </div>
+
         </div>
+
     </div>
     <div class="parallax"></div>
 
