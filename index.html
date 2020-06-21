@@ -27,8 +27,11 @@
             </div>
     <!-- this begins the section with the forecast info  -->
             <div class="col-md-8 bg-dark" id="dash">
-                <div class="row bg-light my-2">daily forecast card goes here</div>
-                <div class="row bg-light my-2">make the five-day five cards here, foreach brought back in array</div>
+                <div class="row bg-light my-2">
+                    <div class="col-10 card m-2" id="today"></div>
+                </div>
+                
+                <div class="row bg-light my-2" id="five-day">make the five-day five cards here, foreach brought back in array</div>
             </div>
 
         </div>
@@ -37,6 +40,7 @@
     <div class="parallax"></div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
 </body>
