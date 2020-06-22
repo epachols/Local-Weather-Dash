@@ -14,27 +14,37 @@
         <div class="row justify-content-center">
             <h2>ForeDash, Your Weather Dashboard</h2>
         </div>
-    <!-- this begins the search and button pop section  -->
+        
         <div class="row justify-content-between">
-            <div class="col col-md-4 bg-light" id="search">
+<!-- this begins the search  -->
+            <div class="col col-md-4 col-lg-3 bg-light" id="search">
                 Search:
                 <div class="form-inline mb-3">
-                    <input type="text" class="form-control" id="cityInput" placeholder="E.g., Bangkok">
-                    <button type="button" class="btn btn-secondary btn-lg ml-1 mt-1" id="searchBtn"><i class="fas fa-cloud-moon"></i></button>
+                    <input type="text" class="form-control-inline" id="cityInput" placeholder="E.g., Bangkok">
+                    <button type="button" class="btn btn-secondary ml-1 mt-1" id="searchBtn"><i class="fas fa-cloud-moon"></i></button>
                 </div>
                 <div class="w-100"></div>
                 <div class="py-2" id="cityBtns"></div>
             </div>
-    <!-- this begins the section with the forecast info  -->
-            <div class="col-md-8 bg-dark" id="dash">
+
+            <!-- this begins the section with the forecast info  -->
+            <div class="col-md-8 col-lg-9 bg-light border-left" id="dash">
                 <div class="row bg-light my-2">
-                    <div class="col-10 card m-2" id="today"></div>
+                    <div class="col-10 card mx-2 my-n1" id="today">
+                        <br><br><br><br><br><br><br><br><br><br>
+                    </div>
                 </div>
-                
-                <div class="row bg-light my-2" id="five-day">make the five-day five cards here, foreach brought back in array</div>
+                <div class="row py-n2">
+                    <h3 class="ml-1">Five-Day Forecast:</h3>
+                </div>
+                <div class="row my-2 align-content-center justify-content-around" id="five-day"><br><br><br><br><br></div>
             </div>
 
         </div>
+        <div class="row justify-content-center">
+            <h3 class="text-white"><i class="fas fa-cloud-moon"></i> &nbsp;&nbsp;&copy;<i class="fas fa-crow"></i>&nbsp;&nbsp;<i class="fas fa-cloud-moon"></i> </h2>
+        </div>
+        
 
     </div>
     <div class="parallax"></div>
