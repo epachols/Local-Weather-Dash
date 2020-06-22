@@ -1,14 +1,11 @@
 // make it locally saveable (ideas: button has data-name of city. and data-index of number in array of generated buttons
-// need to link all 3 apis, test outcome.
-// then 5 day forecast
-// then insert uv index into both
 var cityInput = $("#cityInput");
 var searchBtn = $("#searchBtn");
 console.log(cityInput.html());
 // TODO:once cities will push into array, store for local storage data.
 var savedCities = [];
-// button adding to an array of buttons
-// class them as button large, bg light,
+
+// begin function declarations 
 function renderBtns() {
   $("#cityBtns").empty();
 
@@ -74,17 +71,58 @@ function weatherGet() {
     // display temp
     daycard.append(pFour);
 
+    // add line for uv index
+    var pFive = $("<p>");
+    pFive.addClass("uvindex");
+    daycard.append(pFive);
+    uvIndex();
+
     $("#today").prepend(daycard);
   });
 }
 
+
+
+
+
+
 function uvIndex() {
+  var city= cityInput.val().trim();
+
+
+
+
+
+
+
+
+
+  // WORKING HERE --> NEXT TASK IS TO RETRIEVE UV INDEX DATA, THEN:
+  // 1. append uvindex as text content of red button and accompanying text to the p.uvindex element
+  // 2. work on passing city into ALL 3 functions, with city ass the initial call inside them, referencing either 
+  // 2.a. - the data-name of the button created if button was clicked (link in event handler)
+  // 2.b. - the cityInput.val().trim() for it being entered live.
+
+
+
+
+
   
+
+
+
 }
+
+
+
+
+
+
+
+
 
 function fiveDay() {
   $("#five-day").empty();
-  $("<h2>").text("Five-Day Forecast:").prependTo($("#five-day"));
 
   var city = cityInput.val().trim();
   var fiveURL =
