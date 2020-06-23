@@ -1,6 +1,7 @@
 var cityInput = $("#cityInput");
 var searchBtn = $("#searchBtn");
 var clearBtn = $("#clearBtn");
+var cityBtns = $("#cityBtns");
 clearBtn.append(($("<button>").addClass("btn-pill btn-light mt-1 mx-4")).text("Clear"));
   // retrieving locally saved info 
   savedCities = [];
@@ -14,7 +15,7 @@ clearBtn.append(($("<button>").addClass("btn-pill btn-light mt-1 mx-4")).text("C
 $("#fiveDayTitle").addClass("none");
   // begin function declarations 
 function renderBtns() {
-  $("#cityBtns").empty();
+  cityBtns.empty();
   $("#fiveDayTitle").removeClass("none");
   for (var i = 0; i < savedCities.length; i++) {
     var b = $("<button>");
@@ -28,13 +29,13 @@ function renderBtns() {
 // initial call to fill board with stored info 
 renderBtns();
 
-function weatherGet() {
+function weatherGet(inputCity) {
   $("#today").empty();
 
-  var city = cityInput.val().trim();
+  // var city = cityInput.val().trim();
   var weatherURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
-    city +
+    inputCity +
     "&APPID=844468539098ae6ed77db2290adaac81&units=imperial";
   // Creating an AJAX call for the city being clicked
   $.ajax({
@@ -83,13 +84,13 @@ function weatherGet() {
   });
 }
 // and 5 day 
-function fiveDay() {
+function fiveDay(inputCity) {
   $("#five-day").empty();
   
-  var city = cityInput.val().trim();
+  // var city = cityInput.val().trim();
   var fiveURL =
   "https://api.openweathermap.org/data/2.5/forecast?q=" +
-  city +
+  inputCity +
   "&APPID=844468539098ae6ed77db2290adaac81&units=imperial";
   // ajax call for fiveday
   $.ajax({
@@ -106,7 +107,7 @@ function fiveDay() {
       foreCard.prepend(fiveDate);
       
       // retrieve and append icon
-      var iconLine = $("<p>").addClass("justify-self-center")
+      var iconLine = $("<p>").addClass("justify-self-center my-n2")
       var fiveIcon = response.list[ii].weather[0].icon;
       var icon = $("<img>");
       var iconUrl = "http://openweathermap.org/img/w/" + fiveIcon + ".png";
@@ -129,11 +130,51 @@ function fiveDay() {
     }
   });
 }
-// event listener for search buttons 
+// event listener for search button 
 searchBtn.click(function () {
   event.preventDefault();
   var city = cityInput.val().trim();
-  //  TODO: could handle both entry options here? just do one major button listener for all of the buttons in that column. do if-else chains. IF they click a button, IF it's clear button, do clear function. ELSE try and use userinput. IF userinput is blank, THEN use this.data-name.val()
+  if (city) {
+    savedCities.push(city);
+    weatherGet(city);
+    fiveDay(city);
+    cityInput.val("");
+    // calling button re-render 
+    renderBtns();
+    // saving updated list to local storage 
+    for (ii=0; ii<savedCities.length; ii++){
+      localStorage.setItem([ii], savedCities[ii]);
+    }
+  }
+});
+// event listener for stored buttons
+cityBtns.click(function () {
+  event.preventDefault();
+  // TODO:  THIS COULD BE AN ISSUE
+  var city = $(this).data.name;
+  weatherGet(city);
+  fiveDay(city);
+  // if (city) {
+  //   savedCities.push(city);
+  //   cityInput.val("");
+  //   // calling button re-render 
+  //   renderBtns();
+  //   // saving updated list to local storage 
+  //   for (ii=0; ii<savedCities.length; ii++){
+  //     localStorage.setItem([ii], savedCities[ii]);
+  //   }
+  // }
+});
+
+
+// the handler for the button that clears local storage.
+clearBtn.click(function (){
+  savedCities = [];
+  localStorage.clear();
+  renderBtns();
+});
+
+//  TODO: could handle both entry options here? just do one major button listener for all of the buttons in that column. do if-else chains. IF they click a button, IF it's clear button, do clear function. ELSE try and use userinput. IF userinput is blank, THEN use this.data-name.val()
 // TODO:
 // TODO:MUST
 // TODO:    MAKE CLICK LISTENER
@@ -146,26 +187,4 @@ searchBtn.click(function () {
 
 // the other option is whether we are passing the this.data-name.val() or the cityInput.val().trim() into the weather get functions. MAKE SURE TO check all possible options.
 
-// TODO: the below feature handles adding the entered city (if anything was entered into the list.) once we run a check on a result positive, we should do this! put it inside the get weather function.
-  if (city) {
-    savedCities.push(city);
-    weatherGet();
-    fiveDay();
-    cityInput.val("");
-    // calling button re-render 
-    renderBtns();
-    // saving updated list to local storage 
-    for (ii=0; ii<savedCities.length; ii++){
-      localStorage.setItem([ii], savedCities[ii]);
-    }
-  }
-});
-
-
-
-// the handler for the button that clears local storage.
-clearBtn.click(function (){
-  savedCities = [];
-  localStorage.clear();
-  renderBtns();
-});
+// TODO: edge case no city entered, edge case muliple buttons of same city. run an if (!savedCities.includes(city)); the below feature handles adding the entered city
