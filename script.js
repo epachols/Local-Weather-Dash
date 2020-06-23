@@ -2,18 +2,22 @@ var cityInput = $("#cityInput");
 var searchBtn = $("#searchBtn");
 var clearBtn = $("#clearBtn");
 var cityBtns = $("#cityBtns");
-clearBtn.append(($("<button>").addClass("btn-pill btn-light mt-1 mx-4")).text("Clear"));
-  // retrieving locally saved info 
-  savedCities = [];
-  for(ii=0; ii<10; ii++) {
-    var retrievedCity = localStorage.getItem([ii]);
-    if (retrievedCity) {
-      savedCities.push(retrievedCity)
-    } else {break};
-    console.log(savedCities);
-  };
+clearBtn.append(
+  $("<button>").addClass("btn-pill btn-light mt-1 mx-4").text("Clear")
+);
+// retrieving locally saved info
+savedCities = [];
+for (ii = 0; ii < 10; ii++) {
+  var retrievedCity = localStorage.getItem([ii]);
+  if (retrievedCity) {
+    savedCities.push(retrievedCity);
+  } else {
+    break;
+  }
+  console.log(savedCities);
+}
 $("#fiveDayTitle").addClass("none");
-  // begin function declarations 
+// begin function declarations
 function renderBtns() {
   cityBtns.empty();
   $("#fiveDayTitle").removeClass("none");
@@ -26,7 +30,7 @@ function renderBtns() {
     $("#cityBtns").prepend(b);
   }
 }
-// initial call to fill board with stored info 
+// initial call to fill board with stored info
 renderBtns();
 
 function weatherGet(inputCity) {
@@ -42,9 +46,8 @@ function weatherGet(inputCity) {
     url: weatherURL,
     method: "GET",
   }).then(function (response) {
-    
     var daycard = $("<div card>");
-    // if (!response) {   
+    // if (!response) {
     // } else {}
     // Storing the city name/date
     var name = response.name + "(" + moment().format("MMM Do YY") + ")";
@@ -69,68 +72,78 @@ function weatherGet(inputCity) {
     // add line for uv index
     var pFive = $("<p>").addClass("uvindex");
     daycard.append(pFive);
-    function uvIndex(){
+    function uvIndex() {
       $.ajax({
-      url: "http://api.openweathermap.org/data/2.5/uvi?appid=844468539098ae6ed77db2290adaac81&lat=" + response.coord.lat + "&lon=" + response.coord.lon,
-      method: "GET",
-    }).then(function (response) {
-      var uvResp = $("<p>").text("UV index: ");
-      var uvDisplay = $("<button>").addClass("btn btn-warning");
-      uvDisplay.text(response.value);
-      uvResp.append(uvDisplay);
-      uvResp.appendTo($("#today"));
-    });};
+        url:
+          "http://api.openweathermap.org/data/2.5/uvi?appid=844468539098ae6ed77db2290adaac81&lat=" +
+          response.coord.lat +
+          "&lon=" +
+          response.coord.lon,
+        method: "GET",
+      }).then(function (response) {
+        var uvResp = $("<p>").text("UV index: ");
+        var uvDisplay = $("<button>").addClass("btn btn-warning");
+        uvDisplay.text(response.value);
+        uvResp.append(uvDisplay);
+        uvResp.appendTo($("#today"));
+      });
+    }
     $("#today").prepend(daycard);
   });
 }
-// and 5 day 
+// and 5 day
 function fiveDay(inputCity) {
   $("#five-day").empty();
-  
+
   // var city = cityInput.val().trim();
   var fiveURL =
-  "https://api.openweathermap.org/data/2.5/forecast?q=" +
-  inputCity +
-  "&APPID=844468539098ae6ed77db2290adaac81&units=imperial";
+    "https://api.openweathermap.org/data/2.5/forecast?q=" +
+    inputCity +
+    "&APPID=844468539098ae6ed77db2290adaac81&units=imperial";
   // ajax call for fiveday
   $.ajax({
     url: fiveURL,
     method: "GET",
   }).then(function (response) {
-    for (ii=0; ii<5; ii++) {
-      // make card with background color (custom)
-      var foreCard = $("<div>").addClass("card col-sm-5 col-md-2 blueSteel text-white p-1 my-3");
-      
+    for (ii = 0; ii < 5; ii++) {
+      var foreCard = $("<div>").addClass(
+        "card col-sm-5 col-md-2 blueSteel text-white p-1 my-3"
+      );
+
       // retrieve and append date
       var fiveDate = $("<h5>").addClass("card-title");
-      fiveDate.text(moment().add((ii+1), 'days').format('L'));
+      fiveDate.text(
+        moment()
+          .add(ii + 1, "days")
+          .format("L")
+      );
       foreCard.prepend(fiveDate);
-      
+
       // retrieve and append icon
-      var iconLine = $("<p>").addClass("justify-self-center my-n2")
+      var iconLine = $("<p>").addClass("justify-self-center my-n2");
       var fiveIcon = response.list[ii].weather[0].icon;
       var icon = $("<img>");
       var iconUrl = "http://openweathermap.org/img/w/" + fiveIcon + ".png";
       icon.attr("src", iconUrl);
       icon.appendTo(iconLine);
       iconLine.appendTo(foreCard);
-      
+
       // retrieve and append temp
-      var fivetemp = $("<p>");
-      fivetemp.text("Temp: " + response.list[ii].main.temp + "°F");
+      var fivetemp = $("<p>").text(
+        "Temp: " + response.list[ii].main.temp + "°F"
+      );
       foreCard.append(fivetemp);
-      
       // retrieve and append humidity
-      var fiveHum = $("<p>");
-      fiveHum.text("Humidity: " + response.list[ii].main.humidity + "%");
+      var fiveHum = $("<p>").text(
+        "Humidity: " + response.list[ii].main.humidity + "%"
+      );
       foreCard.append(fiveHum);
-      
-      // append card 
+      // append card
       $("#five-day").append(foreCard);
     }
   });
 }
-// event listener for search button 
+// event listener for search button
 searchBtn.click(function () {
   event.preventDefault();
   var city = cityInput.val().trim();
@@ -139,10 +152,9 @@ searchBtn.click(function () {
     weatherGet(city);
     fiveDay(city);
     cityInput.val("");
-    // calling button re-render 
     renderBtns();
-    // saving updated list to local storage 
-    for (ii=0; ii<savedCities.length; ii++){
+    // saving updated list to local storage
+    for (ii = 0; ii < savedCities.length; ii++) {
       localStorage.setItem([ii], savedCities[ii]);
     }
   }
@@ -150,41 +162,16 @@ searchBtn.click(function () {
 // event listener for stored buttons
 cityBtns.click(function () {
   event.preventDefault();
-  // TODO:  THIS COULD BE AN ISSUE
   var city = $(this).data.name;
   weatherGet(city);
   fiveDay(city);
-  // if (city) {
-  //   savedCities.push(city);
-  //   cityInput.val("");
-  //   // calling button re-render 
-  //   renderBtns();
-  //   // saving updated list to local storage 
-  //   for (ii=0; ii<savedCities.length; ii++){
-  //     localStorage.setItem([ii], savedCities[ii]);
-  //   }
-  // }
 });
-
-
-// the handler for the button that clears local storage.
-clearBtn.click(function (){
+// event handler for clear button
+clearBtn.click(function () {
   savedCities = [];
   localStorage.clear();
   renderBtns();
 });
 
-//  TODO: could handle both entry options here? just do one major button listener for all of the buttons in that column. do if-else chains. IF they click a button, IF it's clear button, do clear function. ELSE try and use userinput. IF userinput is blank, THEN use this.data-name.val()
-// TODO:
-// TODO:MUST
-// TODO:    MAKE CLICK LISTENER
-// TODO:                      FOR BUTTONS GENERATED. PARSE THIS INTO UNIFIED FUNCTIONS
-// TODO:                      
-// TODO:                      STILL NEED TO DEAL WITH WHAT IS PASSED INTO THE FUNCTIONS THAT RETRIEVE THE API DATA.
-// TODO: 
-// TODO: 
-// TODO:    add conditional handling of user entering the same damn city 90 times.
-
-// the other option is whether we are passing the this.data-name.val() or the cityInput.val().trim() into the weather get functions. MAKE SURE TO check all possible options.
-
+// TODO: add conditional handling of user entering the same damn city 90 times.
 // TODO: edge case no city entered, edge case muliple buttons of same city. run an if (!savedCities.includes(city)); the below feature handles adding the entered city
