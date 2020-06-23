@@ -2,9 +2,8 @@ var cityInput = $("#cityInput");
 var searchBtn = $("#searchBtn");
 var clearBtn = $("#clearBtn");
 var cityBtns = $("#cityBtns");
-clearBtn.append(
-  $("<button>").addClass("btn-pill btn-light mt-1 mx-4").text("Clear")
-);
+
+clearBtn.append($("<button>").addClass("btn-pill btn-light mt-1 mx-4").text("Clear"));
 // retrieving locally saved info
 savedCities = [];
 for (ii = 0; ii < 10; ii++) {
@@ -14,13 +13,10 @@ for (ii = 0; ii < 10; ii++) {
   } else {
     break;
   }
-  console.log(savedCities);
 }
-$("#fiveDayTitle").addClass("none");
 // begin function declarations
 function renderBtns() {
   cityBtns.empty();
-  $("#fiveDayTitle").removeClass("none");
   for (var i = 0; i < savedCities.length; i++) {
     var b = $("<button>");
     b.addClass("col btn btn-lg bg-dark text-light mb-1");
@@ -94,8 +90,8 @@ function weatherGet(inputCity) {
 // and 5 day
 function fiveDay(inputCity) {
   $("#five-day").empty();
-
-  // var city = cityInput.val().trim();
+  $("#fiveTitle").text("Five Day Forecast: ")
+   // var city = cityInput.val().trim();
   var fiveURL =
     "https://api.openweathermap.org/data/2.5/forecast?q=" +
     inputCity +
@@ -147,7 +143,7 @@ function fiveDay(inputCity) {
 searchBtn.click(function () {
   event.preventDefault();
   var city = cityInput.val().trim();
-  if (city) {
+  if (city && (!savedCities.includes(city))) {
     savedCities.push(city);
     weatherGet(city);
     fiveDay(city);
@@ -169,9 +165,15 @@ cityBtns.click(function () {
 // event handler for clear button
 clearBtn.click(function () {
   savedCities = [];
+  cityInput.val("");
+  $("#five-day").empty();
+  $("#today").empty();
+  $("#fiveTitle").text("Search a City to see current weather, forecast, and UV index");
   localStorage.clear();
   renderBtns();
 });
 
-// TODO: add conditional handling of user entering the same damn city 90 times.
-// TODO: edge case no city entered, edge case muliple buttons of same city. run an if (!savedCities.includes(city)); the below feature handles adding the entered city
+// icebox
+// TODO:make a moment conditional that handles day vs night css style. IF toggle is set to night, remove day class add night class, else add day remove night.
+// TODO:combine both search function to take in weather param for weather, forecast param for 5 day.
+// TODO:
