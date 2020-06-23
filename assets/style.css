@@ -1,18 +1,33 @@
 body {
-    background-color: steelblue;
+    background-color: #4682b4;
     margin-top: 2vh;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
 #dash {
-    background-color: #F5EBE2;
+    background-color: #eeeeee;
 }
 h2 {
     margin: 4 auto;
+    color: rgb(255, 255, 255);
     text-shadow: oldlace;
     text-decoration: overline;
     text-decoration-style: solid;
 }
 
+#titleDiv {
+    border-style: solid;
+    border-top: saddlebrown;
+    border-width: 2vw;
+}
+
+.blueSteel {
+    background-color: #4682b4;
+}
+
+.none {
+    display: none;
+}
 .parallax {
     background-image: url("./calvin&hobbes.jpg");
     height: 100px;
@@ -23,5 +38,5 @@ h2 {
     background-repeat: no-repeat;
     background-size: cover;
     height: 40vw;
-    margin-top: 30vh;
+    margin-top: 15px;
   }

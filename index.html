@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/956330d85a.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./assets/style.css">
     <title>ForeDash, your Weather dashboard</title>
@@ -11,7 +12,7 @@
 <body>
     <div class="container-fluid" id="main-content">
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" id="titleDiv">
             <h2>ForeDash, A Weather Dashboard</h2>
         </div>
         
@@ -25,27 +26,28 @@
                 </div>
                 <div class="w-100"></div>
                 <div class="py-2" id="cityBtns"></div>
+                <div class="w-100"></div>
+                <div class="col justify-self-center" id="clearBtn"></div>
             </div>
 
             <!-- this begins the section with the forecast info  -->
             <div class="col-md-8 col-lg-9 bg-light border-left" id="dash">
+                <!-- <div class="row none" id="hiddenZoid"></div> -->
                 <div class="row bg-light my-2">
                     <div class="col-10 card mx-2 my-n1" id="today">
                         <br><br><br><br><br><br><br><br><br><br>
                     </div>
                 </div>
-                <div class="row py-n2">
+                <div class="row py-n2" id="fiveDayTitle">
                     <h3 class="ml-1">Five-Day Forecast:</h3>
                 </div>
                 <div class="row my-2 align-content-center justify-content-around" id="five-day"><br><br><br><br><br></div>
             </div>
 
         </div>
-        <div class="row justify-content-center">
-            <h3 class="text-white"><i class="fas fa-cloud-moon"></i> &nbsp;&nbsp;&copy;<i class="fas fa-crow"></i>&nbsp;&nbsp;<i class="fas fa-cloud-moon"></i> </h2>
-        </div>
-        
-
+    </div>
+    <div class="row justify-content-center">
+        <h3 class="text-white my-3"><i class="fas fa-cloud-moon"></i> &nbsp;&copy;&nbsp;&nbsp;<i class="fas fa-crow"></i></h2>
     </div>
     <div class="parallax"></div>
 
