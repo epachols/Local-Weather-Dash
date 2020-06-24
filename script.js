@@ -2,8 +2,7 @@ var cityInput = $("#cityInput");
 var searchBtn = $("#searchBtn");
 var clearBtn = $("#clearBtn");
 var cityBtns = $("#cityBtns");
-
-clearBtn.append($("<button>").addClass("btn-pill btn-light mt-1 mx-4").text("Clear"));
+clearBtn.append($("<button>").addClass("btn-pill btn-light mt-1 mb-2 mx-4").text("Clear"));
 // retrieving locally saved info
 savedCities = [];
 for (ii = 0; ii < 10; ii++) {
@@ -19,14 +18,14 @@ function renderBtns() {
   cityBtns.empty();
   for (var i = 0; i < savedCities.length; i++) {
     var b = $("<button>");
-    b.addClass("col btn btn-lg bg-dark text-light mb-1");
+    b.addClass("col-5 col-md-12 btn btn-lg bg-dark text-light mb-1");
     b.attr("data-name", savedCities[i]);
     b.attr("data-index", [i]);
     b.text(savedCities[i]);
     $("#cityBtns").prepend(b);
   }
 }
-
+// weather retrieval 
 function weatherGet(inputCity) {
   $("#today").empty();
 
@@ -90,7 +89,6 @@ function weatherGet(inputCity) {
 function fiveDay(inputCity) {
   $("#five-day").empty();
   $("#fiveTitle").text("Five Day Forecast: ")
-   // var city = cityInput.val().trim();
   var fiveURL =
     "https://api.openweathermap.org/data/2.5/forecast?q=" +
     inputCity +
@@ -102,8 +100,12 @@ function fiveDay(inputCity) {
   }).then(function (response) {
     for (ii = 0; ii < 5; ii++) {
       var foreCard = $("<div>").addClass(
-        "card col-sm-5 col-md-2 blueSteel text-white p-1 my-3"
+        "card col-5 col-md-2 text-white p-1 my-3"
       );
+      // handling day/night styles
+      if (((moment().format('H')) < 19) || (($('#dayNight').prop('checked')))) {
+        foreCard.addClass("blueSteel");
+      } else {foreCard.addClass("darkNight");}
 
       // retrieve and append date
       var fiveDate = $("<h5>").addClass("card-title");
@@ -142,6 +144,7 @@ function fiveDay(inputCity) {
 renderBtns();
 weatherGet(savedCities[savedCities.length-1]);
 fiveDay(savedCities[savedCities.length-1]);
+
 // event listener for search button
 searchBtn.click(function () {
   event.preventDefault();
@@ -176,6 +179,52 @@ clearBtn.click(function () {
   renderBtns();
 });
 
-// icebox
-// TODO:make a moment conditional that handles day vs night css style. IF toggle is set to night, remove day class add night class, else add day remove night.
+// TODO:
+// TODO:
+// TODO:
+// TODO:favorable-moderate-severe uv index coloration upon button generation.
+// TODO:3-5 yellow, 6-7 orange, 8-10-red 11+ violet
+// TODO:
+// TODO:
+
+// the following section contains a completely unneccessary, soaking wet repetitive section that handles
+//  day/night changes via a toggle for css styling. I was playing around with conditional styles, and haven't merged the two yet, because I organized them sort of contrary to each other.Seems like it would require switching the data attribute of the toggle and the whole section of code, which I may do after the project1 due date.
+
+$('#dayNight').change(function() 
+{
+  if ($(this).prop('checked')) {
+    // if this is checked, (on night), then switch to day
+    $("#parallaxImg").removeClass("parallaxNight");
+    $("#parallaxImg").addClass("parallax");
+    $("body").css("background-color", "#4682b4");
+    $(".darkNight").addClass("blueSteel");
+    $(".blueSteel").removeClass("darkNight");
+    
+  } else {
+    // switch to night
+    $("#parallaxImg").removeClass("parallax");
+    $("#parallaxImg").addClass("parallaxNight");
+    $("body").css("background-color", "#1f2a6b");
+    $(".blueSteel").addClass("darkNight");
+    $(".darkNight").removeClass("blueSteel");
+  }
+});
+
+// function dayNight (){
+  if ((moment().format('H')) > 17){
+    // if it's later than five, set bg color to purple,  
+    $("body").css("background-color", "#1f2a6b");
+    $("#parallaxImg").removeClass("parallaxNight");
+    $("#parallaxImg").addClass("parallax");
+    $("#dayNight").bootstrapToggle('off');
+  } else {
+    // render it daytime
+    $("body").css("background-color", "#4682b4");
+    $('#foreCard').addClass('blueSteel');
+    $('#foreCard').removeClass('darkNight');
+    $("#parallaxImg").removeClass("parallaxNight");
+    $("#parallaxImg").addClass("parallax");
+  };
+// }
+
 

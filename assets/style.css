@@ -25,11 +25,26 @@ h2 {
     background-color: #4682b4;
 }
 
+.darkNight {
+    background-color: #1f2a6b;
+}
+
 .none {
     display: none;
 }
 .parallax {
     background-image: url("./easternwaplains.jpg");
+    height: 100px;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 40vw;
+  }
+  .parallaxNight {
+    background-image: url("./sunsetupnorth.jpg");
     height: 100px;
 
     /* Create the parallax scrolling effect */
