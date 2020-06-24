@@ -26,8 +26,6 @@ function renderBtns() {
     $("#cityBtns").prepend(b);
   }
 }
-// initial call to fill board with stored info
-renderBtns();
 
 function weatherGet(inputCity) {
   $("#today").empty();
@@ -84,6 +82,7 @@ function weatherGet(inputCity) {
         uvResp.appendTo($("#today"));
       });
     }
+    uvIndex()
     $("#today").prepend(daycard);
   });
 }
@@ -139,6 +138,10 @@ function fiveDay(inputCity) {
     }
   });
 }
+// initial call to fill board with stored info
+renderBtns();
+weatherGet(savedCities[savedCities.length-1]);
+fiveDay(savedCities[savedCities.length-1]);
 // event listener for search button
 searchBtn.click(function () {
   event.preventDefault();
@@ -156,9 +159,9 @@ searchBtn.click(function () {
   }
 });
 // event listener for stored buttons
-cityBtns.click(function () {
+cityBtns.on("click", ".btn", function (){
   event.preventDefault();
-  var city = $(this).data.name;
+  var city = $(this).attr("data-name");
   weatherGet(city);
   fiveDay(city);
 });
@@ -175,5 +178,4 @@ clearBtn.click(function () {
 
 // icebox
 // TODO:make a moment conditional that handles day vs night css style. IF toggle is set to night, remove day class add night class, else add day remove night.
-// TODO:combine both search function to take in weather param for weather, forecast param for 5 day.
-// TODO:
+
