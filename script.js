@@ -6,7 +6,7 @@ clearBtn.append($("<button>").addClass("btn-pill btn-light mt-1 mb-2 mx-4").text
 // retrieving locally saved info
 savedCities = [];
 for (ii = 0; ii < 10; ii++) {
-  var retrievedCity = localStorage.getItem([ii]);
+  var retrievedCity = localStorage.getItem(ii);
   if (retrievedCity) {
     savedCities.push(retrievedCity);
   } else {
@@ -71,7 +71,7 @@ function weatherGet(inputCity) {
     function uvIndex() {
       $.ajax({
         url:
-          "http://api.openweathermap.org/data/2.5/uvi?appid=844468539098ae6ed77db2290adaac81&lat=" +
+          "https://api.openweathermap.org/data/2.5/uvi?appid=844468539098ae6ed77db2290adaac81&lat=" +
           response.coord.lat +
           "&lon=" +
           response.coord.lon,
