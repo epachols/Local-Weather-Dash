@@ -25,7 +25,10 @@ function renderBtns() {
     $("#cityBtns").prepend(b);
   }
 }
-// weather retrieval 
+/**
+ * 
+ * @param {*} inputCity for the initial weather retrieval function is taken as either the button data-name or the search input field value. A portion of the results are then passed to the UV index ajax call.
+ */
 function weatherGet(inputCity) {
   $("#today").empty();
 
@@ -75,7 +78,18 @@ function weatherGet(inputCity) {
         method: "GET",
       }).then(function (response) {
         var uvResp = $("<p>").text("UV index: ");
-        var uvDisplay = $("<button>").addClass("btn btn-warning");
+        var uvDisplay = $("<button>").addClass("btn");
+        // handling condition uv response coloration
+        if (response.value <5) {
+          uvDisplay.addClass("btn-success")
+        } else
+        if (response.value < 8) {
+          uvDisplay.addClass("btn-warning")
+        }
+        else 
+        if (response.value > 8) {
+          uvDisplay.addClass("btn-danger")
+        }
         uvDisplay.text(response.value);
         uvResp.append(uvDisplay);
         uvResp.appendTo($("#today"));
@@ -85,7 +99,10 @@ function weatherGet(inputCity) {
     $("#today").prepend(daycard);
   });
 }
-// and 5 day
+/**
+ * 
+ * @param {*} inputCity takes in the same parameter from a given source, but runs the forecast api and generates 5 buttons instead
+ */
 function fiveDay(inputCity) {
   $("#five-day").empty();
   $("#fiveTitle").text("Five Day Forecast: ")
@@ -140,6 +157,7 @@ function fiveDay(inputCity) {
     }
   });
 }
+
 // initial call to fill board with stored info
 renderBtns();
 weatherGet(savedCities[savedCities.length-1]);
@@ -179,14 +197,6 @@ clearBtn.click(function () {
   renderBtns();
 });
 
-// TODO:
-// TODO:
-// TODO:
-// TODO:favorable-moderate-severe uv index coloration upon button generation.
-// TODO:3-5 yellow, 6-7 orange, 8-10-red 11+ violet
-// TODO:
-// TODO:
-
 // the following section contains a completely unneccessary, soaking wet repetitive section that handles
 //  day/night changes via a toggle for css styling. I was playing around with conditional styles, and haven't merged the two yet, because I organized them sort of contrary to each other.Seems like it would require switching the data attribute of the toggle and the whole section of code, which I may do after the project1 due date.
 
@@ -209,7 +219,6 @@ $('#dayNight').change(function()
     $(".darkNight").removeClass("blueSteel");
   }
 });
-
 // function dayNight (){
   if ((moment().format('H')) > 17){
     // if it's later than five, set bg color to purple,  
@@ -226,5 +235,3 @@ $('#dayNight').change(function()
     $("#parallaxImg").addClass("parallax");
   };
 // }
-
-
