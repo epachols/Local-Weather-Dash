@@ -2,6 +2,8 @@
 
 App page that uses 3rd party API retrieval to generate a localized custom weather dashboard.
 
+ - deployed link: https://epachols.github.io/Local-Weather-Dash/
+ 
 # User can see the weather outlook for multiple cities so they may plan a trip accordingly.
 
 - A weather dashboard with form inputs
